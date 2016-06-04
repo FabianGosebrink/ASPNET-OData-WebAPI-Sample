@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNET-WebAPI-OData-Sample", "ASPNET-WebAPI-OData-Sample\ASPNET-WebAPI-OData-Sample.csproj", "{B2490AD0-1477-4F1E-A26E-C58435D43DF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNET-WebAPI-OData-Sample.Models", "ASPNET-WebAPI-OData-Sample.Models\ASPNET-WebAPI-OData-Sample.Models.csproj", "{2FECB014-86F9-4B13-9556-AD5E3B8DF9F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASPNET-WebAPI-OData-Sample.DataAccess", "ASPNET-WebAPI-OData-Sample.DataAccess\ASPNET-WebAPI-OData-Sample.DataAccess.csproj", "{E553E0C6-2B06-4189-A722-E66BB369C6A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B2490AD0-1477-4F1E-A26E-C58435D43DF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2490AD0-1477-4F1E-A26E-C58435D43DF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2490AD0-1477-4F1E-A26E-C58435D43DF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2490AD0-1477-4F1E-A26E-C58435D43DF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FECB014-86F9-4B13-9556-AD5E3B8DF9F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FECB014-86F9-4B13-9556-AD5E3B8DF9F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FECB014-86F9-4B13-9556-AD5E3B8DF9F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FECB014-86F9-4B13-9556-AD5E3B8DF9F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E553E0C6-2B06-4189-A722-E66BB369C6A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E553E0C6-2B06-4189-A722-E66BB369C6A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E553E0C6-2B06-4189-A722-E66BB369C6A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E553E0C6-2B06-4189-A722-E66BB369C6A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
