@@ -25,14 +25,14 @@ namespace ASPNET_WebAPI_OData_Sample.Controllers
         [ODataRoute("Persons({id})")]
         public IHttpActionResult GetSinglePerson([FromODataUri] int id)
         {
-            var house = _personRepository.GetSingle(id);
+            var personEntity = _personRepository.GetSingle(id);
 
-            if (house == null)
+            if (personEntity == null)
             {
                 return NotFound();
             }
 
-            return Ok(house);
+            return Ok(personEntity);
         }
     }
 }

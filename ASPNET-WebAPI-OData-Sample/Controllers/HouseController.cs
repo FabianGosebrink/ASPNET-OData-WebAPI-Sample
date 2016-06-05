@@ -1,7 +1,10 @@
-﻿using System.Web.Http;
+﻿using System.Linq;
+using System.Net;
+using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Routing;
 using ASPNET_WebAPI_OData_Sample.DataAccess;
+using ASPNET_WebAPI_OData_Sample.Models.Models;
 
 namespace ASPNET_WebAPI_OData_Sample.Controllers
 {
@@ -9,12 +12,13 @@ namespace ASPNET_WebAPI_OData_Sample.Controllers
     {
         private readonly IHouseRepository _houseRepository;
 
-        public HouseController()
+        public HouseController(IHouseRepository houseRepository)
         {
-            _houseRepository = new HouseRepository();
+            _houseRepository = houseRepository;
         }
 
         [HttpGet]
+        [EnableQuery]
         [ODataRoute("Houses")]
         public IHttpActionResult GetAllHouses()
         {
@@ -22,17 +26,97 @@ namespace ASPNET_WebAPI_OData_Sample.Controllers
         }
 
         [HttpGet]
+        [EnableQuery]
         [ODataRoute("Houses({id})")]
         public IHttpActionResult GetSingleHouse([FromODataUri] int id)
         {
-            var house = _houseRepository.GetSingle(id);
+            IQueryable<HouseEntity> house = _houseRepository.GetAll().Where(x => x.Id == id);
 
-            if (house == null)
+            if (!house.Any())
             {
                 return NotFound();
             }
 
-            return Ok(house);
+            return Ok(SingleResult.Create(house));
+        }
+
+        [HttpPost]
+        [ODataRoute("Houses")]
+        public IHttpActionResult CreateNewHouse(HouseEntity houseEntity)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            HouseEntity addedEntity = _houseRepository.Add(houseEntity);
+
+            return Created(addedEntity);
+        }
+
+        [HttpPut]
+        [ODataRoute("Houses({id})")]
+        public IHttpActionResult UpdateFullHouse([FromODataUri] int id, HouseEntity houseEntity)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            HouseEntity existingHouseEntity = _houseRepository.GetSingle(id).First();
+
+            if (existingHouseEntity == null)
+            {
+                return NotFound();
+            }
+
+            houseEntity.Id = existingHouseEntity.Id;
+
+            _houseRepository.Update(houseEntity);
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpPatch]
+        [ODataRoute("Houses({id})")]
+        public IHttpActionResult Patch([FromODataUri] int id, Delta<HouseEntity> houseEntity)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            HouseEntity existingHouseEntity = _houseRepository.GetSingle(id).First();
+
+            if (existingHouseEntity == null)
+            {
+                return NotFound();
+            }
+
+            houseEntity.Patch(existingHouseEntity);
+
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+
+        [HttpDelete]
+        [ODataRoute("Houses({id})")]
+        public IHttpActionResult Patch([FromODataUri] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            HouseEntity existingHouseEntity = _houseRepository.GetSingle(id).First();
+
+            if (existingHouseEntity == null)
+            {
+                return NotFound();
+            }
+
+            _houseRepository.Delete(id);
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
     }
 }

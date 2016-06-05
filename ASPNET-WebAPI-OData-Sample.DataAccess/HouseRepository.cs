@@ -6,37 +6,37 @@ namespace ASPNET_WebAPI_OData_Sample.DataAccess
 {
     public class HouseRepository : IHouseRepository
     {
-        readonly Dictionary<int, HouseEntity> _houses = new Dictionary<int, HouseEntity>();
+        readonly List<HouseEntity> _houses = new List<HouseEntity>();
 
         public HouseRepository()
         {
-            _houses.Add(1, new HouseEntity() { City = "Town1", Id = 1, Street = "Street1", ZipCode = 1234 });
-            _houses.Add(2, new HouseEntity() { City = "Town2", Id = 2, Street = "Street2", ZipCode = 1234 });
-            _houses.Add(3, new HouseEntity() { City = "Town3", Id = 3, Street = "Street3", ZipCode = 1234 });
-            _houses.Add(4, new HouseEntity() { City = "Town4", Id = 4, Street = "Street4", ZipCode = 1234 });
+            _houses.Add(new HouseEntity() { City = "Town1", Id = 1, Street = "Street1", ZipCode = 1234 });
+            _houses.Add(new HouseEntity() { City = "Town2", Id = 2, Street = "Street2", ZipCode = 1234 });
+            _houses.Add(new HouseEntity() { City = "Town3", Id = 3, Street = "Street3", ZipCode = 1234 });
+            _houses.Add(new HouseEntity() { City = "Town4", Id = 4, Street = "Street4", ZipCode = 1234 });
         }
 
-        public List<HouseEntity> GetAll()
+        public IQueryable<HouseEntity> GetAll()
         {
-            return _houses.Select(x => x.Value).ToList();
+            return _houses.AsQueryable();
         }
 
-        public HouseEntity GetSingle(int id)
+        public IQueryable<HouseEntity> GetSingle(int id)
         {
-            return _houses.FirstOrDefault(x => x.Key == id).Value;
+            return _houses.Where(x => x.Id == id).AsQueryable();
         }
 
         public HouseEntity Add(HouseEntity toAdd)
         {
             int newId = !GetAll().Any() ? 1 : GetAll().Max(x => x.Id) + 1;
             toAdd.Id = newId;
-            _houses.Add(newId, toAdd);
+            _houses.Add(toAdd);
             return toAdd;
         }
 
         public HouseEntity Update(HouseEntity toUpdate)
         {
-            HouseEntity single = GetSingle(toUpdate.Id);
+            HouseEntity single = _houses.FirstOrDefault(x => x.Id == toUpdate.Id);
 
             if (single == null)
             {
@@ -49,7 +49,8 @@ namespace ASPNET_WebAPI_OData_Sample.DataAccess
 
         public void Delete(int id)
         {
-            _houses.Remove(id);
+            HouseEntity single = _houses.FirstOrDefault(x => x.Id == id);
+            _houses.Remove(single);
         }
     }
 }
