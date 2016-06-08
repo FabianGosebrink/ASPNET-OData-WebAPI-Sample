@@ -6,29 +6,29 @@ namespace ASPNET_WebAPI_OData_Sample.DataAccess
 {
     public class PersonRepository : IPersonRepository
     {
-        readonly Dictionary<int, PersonEntity> _persons = new Dictionary<int, PersonEntity>();
+        readonly List<PersonEntity> _persons = new List<PersonEntity>();
 
-        public List<PersonEntity> GetAll()
+        public IQueryable<PersonEntity> GetAll()
         {
-            return _persons.Select(x => x.Value).ToList();
+            return _persons.AsQueryable();
         }
 
-        public PersonEntity GetSingle(int id)
+        public IQueryable<PersonEntity> GetSingle(int id)
         {
-            return _persons.FirstOrDefault(x => x.Key == id).Value;
+            return _persons.Where(x => x.Id == id).AsQueryable();
         }
 
         public PersonEntity Add(PersonEntity toAdd)
         {
             int newId = !GetAll().Any() ? 1 : GetAll().Max(x => x.Id) + 1;
             toAdd.Id = newId;
-            _persons.Add(newId, toAdd);
+            _persons.Add(toAdd);
             return toAdd;
         }
 
         public PersonEntity Update(PersonEntity toUpdate)
         {
-            PersonEntity single = GetSingle(toUpdate.Id);
+            PersonEntity single = _persons.FirstOrDefault(x => x.Id == toUpdate.Id);
 
             if (single == null)
             {
@@ -41,7 +41,8 @@ namespace ASPNET_WebAPI_OData_Sample.DataAccess
 
         public void Delete(int id)
         {
-            _persons.Remove(id);
+            PersonEntity single = _persons.FirstOrDefault(x => x.Id == id);
+            _persons.Remove(single);
         }
     }
 }
