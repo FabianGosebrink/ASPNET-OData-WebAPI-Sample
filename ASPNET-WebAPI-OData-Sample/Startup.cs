@@ -2,10 +2,12 @@
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
 using ASPNET_WebAPI_OData_Sample.DataAccess;
-using ASPNET_WebAPI_OData_Sample.Models.Models;
+using ASPNET_WebAPI_OData_Sample.DataAccess.Repositories;
+using ASPNET_WebAPI_OData_Sample.Models.Entities;
 using Microsoft.OData.Edm;
 using Microsoft.Owin;
 using Ninject;
+using Ninject.Web.Common;
 using Owin;
 using WebApiContrib.IoC.Ninject;
 
@@ -33,7 +35,9 @@ namespace ASPNET_WebAPI_OData_Sample
         {
             var kernel = new StandardKernel();
 
-            kernel.Bind<IHouseRepository>().ToConstant(new HouseRepository());
+            //kernel.Bind<IHouseRepository>().ToConstant(new HouseRepository());            
+            kernel.Bind<IHouseRepository>().To<HouseRepository>().InRequestScope();
+            kernel.Bind<IPersonRepository>().To<PersonRepository>().InRequestScope();
 
             return kernel;
         }

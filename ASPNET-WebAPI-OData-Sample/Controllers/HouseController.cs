@@ -3,8 +3,8 @@ using System.Net;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Routing;
-using ASPNET_WebAPI_OData_Sample.DataAccess;
-using ASPNET_WebAPI_OData_Sample.Models.Models;
+using ASPNET_WebAPI_OData_Sample.DataAccess.Repositories;
+using ASPNET_WebAPI_OData_Sample.Models.Entities;
 
 namespace ASPNET_WebAPI_OData_Sample.Controllers
 {
@@ -50,6 +50,7 @@ namespace ASPNET_WebAPI_OData_Sample.Controllers
             }
 
             HouseEntity addedEntity = _houseRepository.Add(houseEntity);
+            _houseRepository.SaveToDb();
 
             return Created(addedEntity);
         }
@@ -73,6 +74,7 @@ namespace ASPNET_WebAPI_OData_Sample.Controllers
             houseEntity.Id = existingHouseEntity.Id;
 
             _houseRepository.Update(houseEntity);
+            _houseRepository.SaveToDb();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
@@ -94,13 +96,15 @@ namespace ASPNET_WebAPI_OData_Sample.Controllers
             }
 
             houseEntity.Patch(existingHouseEntity);
+            _houseRepository.Update(existingHouseEntity);
+            _houseRepository.SaveToDb();
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         [HttpDelete]
         [ODataRoute("Houses({id})")]
-        public IHttpActionResult Patch([FromODataUri] int id)
+        public IHttpActionResult Delete([FromODataUri] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -115,6 +119,7 @@ namespace ASPNET_WebAPI_OData_Sample.Controllers
             }
 
             _houseRepository.Delete(id);
+            _houseRepository.SaveToDb();
 
             return StatusCode(HttpStatusCode.NoContent);
         }

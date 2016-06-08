@@ -1,12 +1,14 @@
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
-using ASPNET_WebAPI_OData_Sample.Models.Models;
+using ASPNET_WebAPI_OData_Sample.DataAccess.DatabaseContext;
+using ASPNET_WebAPI_OData_Sample.Models.Entities;
 
-namespace ASPNET_WebAPI_OData_Sample.DataAccess
+namespace ASPNET_WebAPI_OData_Sample.DataAccess.Repositories
 {
     public class HouseRepository : IHouseRepository
     {
-        readonly List<HouseEntity> _houses = new List<HouseEntity>();
+        private ODataSampleContext _context = new ODataSampleContext();
 
         public HouseRepository()
         {
@@ -18,39 +20,44 @@ namespace ASPNET_WebAPI_OData_Sample.DataAccess
 
         public IQueryable<HouseEntity> GetAll()
         {
-            return _houses.AsQueryable();
+            return _context.Houses.AsQueryable();
         }
 
         public IQueryable<HouseEntity> GetSingle(int id)
         {
-            return _houses.Where(x => x.Id == id).AsQueryable();
+            return _context.Houses.Where(x => x.Id == id).AsQueryable();
         }
 
         public HouseEntity Add(HouseEntity toAdd)
         {
             int newId = !GetAll().Any() ? 1 : GetAll().Max(x => x.Id) + 1;
             toAdd.Id = newId;
-            _houses.Add(toAdd);
+            _context.Houses.Add(toAdd);
             return toAdd;
         }
 
         public HouseEntity Update(HouseEntity toUpdate)
         {
-            HouseEntity single = _houses.FirstOrDefault(x => x.Id == toUpdate.Id);
+            HouseEntity single = _context.Houses.FirstOrDefault(x => x.Id == toUpdate.Id);
 
             if (single == null)
             {
                 return null;
             }
 
-            _houses[single.Id] = toUpdate;
+            _context.Houses.AddOrUpdate(toUpdate);
             return toUpdate;
         }
 
         public void Delete(int id)
         {
-            HouseEntity single = _houses.FirstOrDefault(x => x.Id == id);
-            _houses.Remove(single);
+            HouseEntity single = _context.Houses.FirstOrDefault(x => x.Id == id);
+            _context.Houses.Remove(single);
+        }
+
+        public void SaveToDb()
+        {
+            _context.SaveChanges();
         }
     }
 }

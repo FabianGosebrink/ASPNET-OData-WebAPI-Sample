@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using System.Linq;
-using ASPNET_WebAPI_OData_Sample.Models.Models;
+using ASPNET_WebAPI_OData_Sample.Models.Entities;
 
-namespace ASPNET_WebAPI_OData_Sample.DataAccess
+namespace ASPNET_WebAPI_OData_Sample.DataAccess.Repositories
 {
     public interface IPersonRepository
     {

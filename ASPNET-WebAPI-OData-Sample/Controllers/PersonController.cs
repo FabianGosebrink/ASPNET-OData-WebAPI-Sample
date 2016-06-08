@@ -2,6 +2,7 @@
 using System.Web.OData;
 using System.Web.OData.Routing;
 using ASPNET_WebAPI_OData_Sample.DataAccess;
+using ASPNET_WebAPI_OData_Sample.DataAccess.Repositories;
 
 namespace ASPNET_WebAPI_OData_Sample.Controllers
 {
