@@ -10,9 +10,9 @@ namespace ASPNET_WebAPI_OData_Sample.Controllers
     {
         private readonly IPersonRepository _personRepository;
 
-        public PersonController()
+        public PersonController(IPersonRepository personRepository)
         {
-            _personRepository = new PersonRepository();
+            _personRepository = personRepository;
         }
 
         [HttpGet]

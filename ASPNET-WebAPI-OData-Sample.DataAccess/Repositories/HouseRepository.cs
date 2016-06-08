@@ -8,15 +8,7 @@ namespace ASPNET_WebAPI_OData_Sample.DataAccess.Repositories
 {
     public class HouseRepository : IHouseRepository
     {
-        private ODataSampleContext _context = new ODataSampleContext();
-
-        public HouseRepository()
-        {
-            _houses.Add(new HouseEntity() { City = "Town1", Id = 1, Street = "Street1", ZipCode = 1234 });
-            _houses.Add(new HouseEntity() { City = "Town2", Id = 2, Street = "Street2", ZipCode = 1234 });
-            _houses.Add(new HouseEntity() { City = "Town3", Id = 3, Street = "Street3", ZipCode = 1234 });
-            _houses.Add(new HouseEntity() { City = "Town4", Id = 4, Street = "Street4", ZipCode = 1234 });
-        }
+        private readonly ODataSampleContext _context = new ODataSampleContext();
 
         public IQueryable<HouseEntity> GetAll()
         {
@@ -30,8 +22,6 @@ namespace ASPNET_WebAPI_OData_Sample.DataAccess.Repositories
 
         public HouseEntity Add(HouseEntity toAdd)
         {
-            int newId = !GetAll().Any() ? 1 : GetAll().Max(x => x.Id) + 1;
-            toAdd.Id = newId;
             _context.Houses.Add(toAdd);
             return toAdd;
         }

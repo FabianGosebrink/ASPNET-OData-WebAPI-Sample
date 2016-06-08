@@ -10,5 +10,6 @@ namespace ASPNET_WebAPI_OData_Sample.DataAccess.Repositories
         PersonEntity Add(PersonEntity toAdd);
         PersonEntity Update(PersonEntity toUpdate);
         void Delete(int id);
+        void SaveToDb();
     }
 }

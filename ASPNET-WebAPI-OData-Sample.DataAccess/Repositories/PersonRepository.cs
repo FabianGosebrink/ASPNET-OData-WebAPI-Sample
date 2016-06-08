@@ -1,48 +1,53 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
+using ASPNET_WebAPI_OData_Sample.DataAccess.DatabaseContext;
 using ASPNET_WebAPI_OData_Sample.Models.Entities;
 
 namespace ASPNET_WebAPI_OData_Sample.DataAccess.Repositories
 {
     public class PersonRepository : IPersonRepository
     {
-        readonly List<PersonEntity> _persons = new List<PersonEntity>();
+        private readonly ODataSampleContext _context = new ODataSampleContext();
 
         public IQueryable<PersonEntity> GetAll()
         {
-            return _persons.AsQueryable();
+            return _context.Persons.AsQueryable();
         }
 
         public IQueryable<PersonEntity> GetSingle(int id)
         {
-            return _persons.Where(x => x.Id == id).AsQueryable();
+            return _context.Persons.Where(x => x.Id == id).AsQueryable();
         }
 
         public PersonEntity Add(PersonEntity toAdd)
         {
-            int newId = !GetAll().Any() ? 1 : GetAll().Max(x => x.Id) + 1;
-            toAdd.Id = newId;
-            _persons.Add(toAdd);
+            _context.Persons.Add(toAdd);
             return toAdd;
         }
 
         public PersonEntity Update(PersonEntity toUpdate)
         {
-            PersonEntity single = _persons.FirstOrDefault(x => x.Id == toUpdate.Id);
+            PersonEntity single = _context.Persons.FirstOrDefault(x => x.Id == toUpdate.Id);
 
             if (single == null)
             {
                 return null;
             }
 
-            _persons[single.Id] = toUpdate;
+            _context.Persons.AddOrUpdate(toUpdate);
             return toUpdate;
         }
 
         public void Delete(int id)
         {
-            PersonEntity single = _persons.FirstOrDefault(x => x.Id == id);
-            _persons.Remove(single);
+            PersonEntity single = _context.Persons.FirstOrDefault(x => x.Id == id);
+            _context.Persons.Remove(single);
+        }
+
+        public void SaveToDb()
+        {
+            _context.SaveChanges();
         }
     }
 }
