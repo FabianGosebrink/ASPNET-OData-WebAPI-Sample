@@ -32,7 +32,7 @@ namespace ASPNET_WebAPI_OData_Sample.Controllers
                 return NotFound();
             }
 
-            return Ok(personEntity);
+            return Ok(SingleResult.Create(personEntity));
         }
     }
 }

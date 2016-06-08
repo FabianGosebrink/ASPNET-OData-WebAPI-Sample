@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ASPNET_WebAPI_OData_Sample.Models.Models
+namespace ASPNET_WebAPI_OData_Sample.Models.Entities
 {
     public class HouseEntity
     {

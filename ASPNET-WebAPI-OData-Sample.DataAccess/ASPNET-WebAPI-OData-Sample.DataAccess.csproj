@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DatabaseContext\ODataSampleContext.cs" />
     <Compile Include="Repositories\HouseRepository.cs" />
     <Compile Include="Repositories\IHouseRepository.cs" />
     <Compile Include="Repositories\IPersonRepository.cs" />
