@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ASPNET_WebAPI_OData_Sample.Models.Entities;
 
 namespace ASPNET_WebAPI_OData_Sample.DataAccess.Repositories
 {
-    public interface IHouseRepository
+    public interface IHouseRepository : IDisposable
     {
         IQueryable<HouseEntity> GetAll();
         IQueryable<HouseEntity> GetSingle(int id);

@@ -1,7 +1,6 @@
 ﻿using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Routing;
-using ASPNET_WebAPI_OData_Sample.DataAccess;
 using ASPNET_WebAPI_OData_Sample.DataAccess.Repositories;
 
 namespace ASPNET_WebAPI_OData_Sample.Controllers
@@ -16,6 +15,7 @@ namespace ASPNET_WebAPI_OData_Sample.Controllers
         }
 
         [HttpGet]
+        [EnableQuery]
         [ODataRoute("Persons")]
         public IHttpActionResult GetAllPersons()
         {
@@ -23,6 +23,7 @@ namespace ASPNET_WebAPI_OData_Sample.Controllers
         }
 
         [HttpGet]
+        [EnableQuery]
         [ODataRoute("Persons({id})")]
         public IHttpActionResult GetSinglePerson([FromODataUri] int id)
         {

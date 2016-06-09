@@ -49,5 +49,10 @@ namespace ASPNET_WebAPI_OData_Sample.DataAccess.Repositories
         {
             _context.SaveChanges();
         }
+
+        public void Dispose()
+        {
+            _context.Dispose();
+        }
     }
 }
