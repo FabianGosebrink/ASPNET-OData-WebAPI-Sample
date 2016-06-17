@@ -96,7 +96,6 @@ namespace ASPNET_WebAPI_OData_Sample.Controllers
             }
 
             houseEntity.Patch(existingHouseEntity);
-            _houseRepository.Update(existingHouseEntity);
             _houseRepository.SaveToDb();
 
             return StatusCode(HttpStatusCode.NoContent);

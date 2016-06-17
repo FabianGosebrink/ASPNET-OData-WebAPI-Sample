@@ -96,7 +96,6 @@ namespace ASPNET_WebAPI_OData_Sample.Controllers
             }
 
             personEntity.Patch(existingPersonEntity);
-            _personRepository.Update(existingPersonEntity);
             _personRepository.SaveToDb();
 
             return StatusCode(HttpStatusCode.NoContent);
