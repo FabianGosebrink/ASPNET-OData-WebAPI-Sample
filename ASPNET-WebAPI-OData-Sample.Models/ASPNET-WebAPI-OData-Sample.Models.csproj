@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Entities\HouseEntity.cs" />
     <Compile Include="Entities\PersonEntity.cs" />
+    <Compile Include="HouseDto.cs" />
+    <Compile Include="PersonDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

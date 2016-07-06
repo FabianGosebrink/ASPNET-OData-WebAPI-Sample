@@ -51,6 +51,10 @@
   <ItemGroup>
     <Compile Include="DatabaseContext\ODataSampleContext.cs" />
     <Compile Include="DatabaseContext\ODataSampleContextInitializer.cs" />
+    <Compile Include="Mappers\House\HouseMapper.cs" />
+    <Compile Include="Mappers\House\IHouseMapper.cs" />
+    <Compile Include="Mappers\Person\IPersonMapper.cs" />
+    <Compile Include="Mappers\Person\PersonMapper.cs" />
     <Compile Include="Repositories\HouseRepository.cs" />
     <Compile Include="Repositories\IHouseRepository.cs" />
     <Compile Include="Repositories\IPersonRepository.cs" />

@@ -2,7 +2,10 @@
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
 using ASPNET_WebAPI_OData_Sample.DataAccess;
+using ASPNET_WebAPI_OData_Sample.DataAccess.Mappers.House;
+using ASPNET_WebAPI_OData_Sample.DataAccess.Mappers.Person;
 using ASPNET_WebAPI_OData_Sample.DataAccess.Repositories;
+using ASPNET_WebAPI_OData_Sample.Models;
 using ASPNET_WebAPI_OData_Sample.Models.Entities;
 using Microsoft.OData.Edm;
 using Microsoft.Owin;
@@ -23,7 +26,7 @@ namespace ASPNET_WebAPI_OData_Sample
             {
                 DependencyResolver = new NinjectResolver(CreateKernel())
             };
-
+            
             config.MapODataServiceRoute("ODataRoute", "odata", GetEdmModel());
 
             config.EnsureInitialized();
@@ -38,6 +41,8 @@ namespace ASPNET_WebAPI_OData_Sample
             //kernel.Bind<IHouseRepository>().ToConstant(new HouseRepository());            
             kernel.Bind<IHouseRepository>().To<HouseRepository>().InRequestScope();
             kernel.Bind<IPersonRepository>().To<PersonRepository>().InRequestScope();
+            kernel.Bind<IPersonMapper>().To<PersonMapper>().InRequestScope();
+            kernel.Bind<IHouseMapper>().To<HouseMapper>().InRequestScope();
 
             return kernel;
         }
@@ -49,7 +54,7 @@ namespace ASPNET_WebAPI_OData_Sample
                 Namespace = "ASPNET-WebAPI-OData-Sample"
             };
 
-            builder.EntitySet<HouseEntity>("Houses");
+            builder.EntitySet<HouseDto>("Houses");
             builder.EntitySet<PersonEntity>("Persons");
 
             return builder.GetEdmModel();
