@@ -6,8 +6,7 @@
         public string Prename { get; set; }
         public string Surname { get; set; }
         public int Age { get; set; }
-
-        public int HouseId { get; set; }
+        
         public HouseEntity House { get; set; }
     }
 }

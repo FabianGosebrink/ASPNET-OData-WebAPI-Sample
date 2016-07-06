@@ -1,12 +1,13 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Web.Http;
 using System.Web.OData;
 using System.Web.OData.Routing;
-using ASPNET_WebAPI_OData_Sample.DataAccess.Mappers.House;
 using ASPNET_WebAPI_OData_Sample.DataAccess.Repositories;
 using ASPNET_WebAPI_OData_Sample.Models;
 using ASPNET_WebAPI_OData_Sample.Models.Entities;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 
 namespace ASPNET_WebAPI_OData_Sample.Controllers
@@ -14,12 +15,10 @@ namespace ASPNET_WebAPI_OData_Sample.Controllers
     public class HouseController : ODataController
     {
         private readonly IHouseRepository _houseRepository;
-        private readonly IHouseMapper _houseMapper;
 
-        public HouseController(IHouseRepository houseRepository, IHouseMapper houseMapper)
+        public HouseController(IHouseRepository houseRepository)
         {
             _houseRepository = houseRepository;
-            _houseMapper = houseMapper;
         }
 
         [HttpGet]
@@ -27,7 +26,9 @@ namespace ASPNET_WebAPI_OData_Sample.Controllers
         [ODataRoute("Houses")]
         public IHttpActionResult GetAllHouses()
         {
-            return Ok(_houseRepository.GetAll().Select(x => _houseMapper.Map(x)).AsQueryable());
+            List<HouseEntity> houseEntities = _houseRepository.GetAll().ToList();
+            IEnumerable<HouseDto> houseDtos = houseEntities.Select(x => Mapper.Map<HouseDto>(x));
+            return Ok(houseDtos.AsQueryable());
         }
 
         [HttpGet]

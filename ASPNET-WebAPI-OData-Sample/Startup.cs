@@ -26,7 +26,15 @@ namespace ASPNET_WebAPI_OData_Sample
             {
                 DependencyResolver = new NinjectResolver(CreateKernel())
             };
-            
+
+            AutoMapper.Mapper.Initialize(mappings =>
+            {
+                mappings.CreateMap<HouseDto, HouseEntity>();
+                mappings.CreateMap<HouseEntity, HouseDto>();
+                mappings.CreateMap<PersonDto, PersonEntity>();
+                mappings.CreateMap<PersonEntity, PersonDto>();
+            });
+
             config.MapODataServiceRoute("ODataRoute", "odata", GetEdmModel());
 
             config.EnsureInitialized();

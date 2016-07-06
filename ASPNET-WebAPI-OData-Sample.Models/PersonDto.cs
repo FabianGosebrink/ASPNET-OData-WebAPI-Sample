@@ -12,8 +12,7 @@ namespace ASPNET_WebAPI_OData_Sample.Models
         public string Prename { get; set; }
         public string Surname { get; set; }
         public int Age { get; set; }
-
-        public int HouseId { get; set; }
-        public virtual HouseDto House { get; set; }
+        
+        public HouseDto House { get; set; }
     }
 }
